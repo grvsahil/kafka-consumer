@@ -1,0 +1,6 @@
+# Database Credentials
+name: "db"
+user: "user"
+password: "password"
+port: 3306
+host: "localhost"
