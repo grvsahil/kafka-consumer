@@ -59,12 +59,16 @@ func (a *Application) Init(ctx context.Context, configFile string) {
 		}
 	}(ctx)
 
-	consumer := a.BuildConsumer()
+	consumer, err := a.BuildConsumer()
+	if err != nil {
+		a.log.Fatalf("failed to initialize consumer: %s ", err)
+		return
+	}
 	a.consumer = consumer
 
-	err = a.consumer.Consume(ctx, a.log, bootstrapServer, []string{topic})
+	err = a.consumer.Consume(ctx, []string{topic})
 	if err != nil {
-		log.Fatalf("error starting consumer: %s ", err)
+		a.log.Fatal(err)
 		return
 	}
 }

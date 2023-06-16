@@ -27,7 +27,7 @@ func NewDB(config *config.Config, log log.Logger) (*sql.DB, error) {
 		return nil, fmt.Errorf("error connecting db %v", err)
 	}
 
-	_, err = db.Exec("CREATE TABLE payments(name varchar(255),amount int);")
+	_, err = db.Exec("CREATE TABLE if not exists payments(name varchar(255),amount int);")
 	if err != nil {
 		log.Errorf("error creating table %v", err)
 		return nil, fmt.Errorf("failed to create table %v", err)

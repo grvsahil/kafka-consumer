@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"os"
 
 	kafkaConsumer "github.com/grvsahil/golang-kafka/kafka-consumer/cmd/kafka-consumer"
 )
@@ -15,4 +16,9 @@ func main() {
 	defer cancel()
 
 	application.Init(ctx, defaultConfPath)
+
+	defer func(cancel context.CancelFunc) {
+		cancel()
+		os.Exit(0)
+	}(cancel)
 }
